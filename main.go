@@ -7,10 +7,10 @@ import (
   "net/smtp"
 )
 
-var username string = os.Getenv("USERNAME")
-var password string = os.Getenv("PASSWORD")
-var hostname string = os.Getenv("HOSTNAME")
-var port string = os.Getenv("PORT")
+var username string = os.Getenv("username")
+var password string = os.Getenv("password")
+var hostname string = os.Getenv("hostname")
+var port string = os.Getenv("port")
 
 func Handler(w http.ResponseWriter, r *http.Request) {
   SendEmail([]string{"donatiennambinintsoa@gmail.com"}, []byte("HEY THERE"))
