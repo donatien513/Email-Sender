@@ -2,7 +2,6 @@ package Handler
 
 import (
   "os"
-  "log"
   "net/http"
   "net/smtp"
 )
