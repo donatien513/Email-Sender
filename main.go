@@ -13,10 +13,15 @@ var hostname string = os.Getenv("hostname")
 var port string = os.Getenv("port")
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-  sendEmail([]string{"donatiennambinintsoa@gmail.com"}, []byte("HEY THERE"))
+  err := sendEmail([]string{"donatiennambinintsoa@gmail.com"}, []byte("HEY THERE"))
+  if err != nil {
+    http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+  } else {
+  	w.WriteHeader(http.StatusOK)
+  }
 }
 
-func sendEmail(recipients []string, body []byte) {
+func sendEmail(recipients []string, body []byte) error {
   auth := smtp.PlainAuth(
     "",
     username,
@@ -31,7 +36,5 @@ func sendEmail(recipients []string, body []byte) {
     recipients,
     body,
   )
-  if err != nil {
-    log.Fatal(err)
-  }
+  return err
 }
