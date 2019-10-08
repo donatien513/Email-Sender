@@ -3,6 +3,7 @@ package Handler
 import (
   "os"
   "log"
+  "net/http"
   "net/smtp"
 )
 
@@ -22,7 +23,7 @@ func SendEmail(recipients []string, body []byte) {
     password,
     hostname,
   )
-  
+
   err := smtp.SendMail(
     hostname + ":" + port,
     auth,
