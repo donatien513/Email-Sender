@@ -17,6 +17,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func SendEmail(recipients []string, body []byte) {
+  print("username " + username + "password " + password + "hostname " + hostname + "port " + port)
+
   auth := smtp.PlainAuth(
     "",
     username,
