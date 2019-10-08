@@ -13,12 +13,10 @@ var hostname string = os.Getenv("hostname")
 var port string = os.Getenv("port")
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-  SendEmail([]string{"donatiennambinintsoa@gmail.com"}, []byte("HEY THERE"))
+  sendEmail([]string{"donatiennambinintsoa@gmail.com"}, []byte("HEY THERE"))
 }
 
-func SendEmail(recipients []string, body []byte) {
-  print("username " + username + "password " + password + "hostname " + hostname + "port " + port)
-
+func sendEmail(recipients []string, body []byte) {
   auth := smtp.PlainAuth(
     "",
     username,

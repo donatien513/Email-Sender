@@ -10,5 +10,11 @@
   ],
   "routes": [
     { "src": "/", "dest": "main.go" }
-  ]
+  ],
+  "env": {
+    "username": "@username",
+    "password": "@password",
+    "username": "@username",
+    "username": "@username"
+  }
 }
