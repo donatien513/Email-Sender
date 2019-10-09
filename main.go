@@ -44,7 +44,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  if emailSendRequest.Recipients == "" || emailSendRequest.Body == "" {
+  if len(emailSendRequest.Recipients) == 0 || emailSendRequest.Body == "" {
     httpFailure(w, http.StatusBadRequest)
     return
   }
