@@ -25,9 +25,11 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   AuthToken := r.Header.Get("Authorization")
   if AuthToken != requestAllowedToken {
     httpFailure(w, http.StatusUnauthorized)
+    return
   }
   if r.Body == nil {
     httpFailure(w, http.StatusBadRequest)
+    return
   }
   if r.Method == http.MethodGet {
     w.WriteHeader(http.StatusOK)
@@ -54,11 +56,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  // sendErr := sendEmail(emailSendRequest.Recipients, []byte(emailSendRequest.Body))
-  
-  // I will always be the recipient so,
-  // I ignore the emailSendRequest.Recipients and set it hard-coded
-  sendErr := sendEmail([]string{username}, []byte(emailSendRequest.Body))
+  sendErr := sendEmail(emailSendRequest.Recipients, []byte(emailSendRequest.Body))
 
   if sendErr != nil {
     httpFailure(w, http.StatusInternalServerError)
