@@ -42,15 +42,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
   decoder := json.NewDecoder(r.Body)
   var emailSendRequest EmailSendRequest
-  err := decoder.Decode(&emailSendRequest)
-  if err != nil {
+  decodeErr := decoder.Decode(&emailSendRequest)
+  if decodeErr != nil {
     // Tell the client that his request payload is not ok
     http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
     return
   }
 
-  err := sendEmail(emailSendRequest.Recipients, []byte(emailSendRequest.Body))
-  if err != nil {
+  sendErr := sendEmail(emailSendRequest.Recipients, []byte(emailSendRequest.Body))
+  if sendErr != nil {
     http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
   } else {
   	w.WriteHeader(http.StatusOK)
