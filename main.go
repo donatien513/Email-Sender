@@ -4,6 +4,7 @@ import (
   "os"
   "net/http"
   "net/smtp"
+  "encoding/json"
 )
 
 // Get all env vars
@@ -21,7 +22,7 @@ type EmailSendRequest struct {
 // HTTP Entry point
 func Handler(w http.ResponseWriter, r *http.Request) {
   // Parse request body
-  if req.Body == nil {
+  if r.Body == nil {
     // Tell the client that his request payload is missing
     http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
   }
@@ -29,7 +30,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   if r.Method != http.MethodGet {
     // Tell the client that everything is fine
     w.WriteHeader(http.StatusOK)
-    w.Write("I am working :)")
+    w.Write([]byte("I am working :)"))
     return
   }
 
@@ -39,7 +40,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  decoder := json.NewDecoder(req.Body)
+  decoder := json.NewDecoder(r.Body)
   var emailSendRequest EmailSendRequest
   err := decoder.Decode(&emailSendRequest)
   if err != nil {
