@@ -21,14 +21,10 @@ type EmailSendRequest struct {
 
 // HTTP Entry point
 func Handler(w http.ResponseWriter, r *http.Request) {
-  // Parse request body
   if r.Body == nil {
-    // Tell the client that his request payload is missing
-    http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+    httpFailure(w, http.StatusBadRequest)
   }
-
   if r.Method == http.MethodGet {
-    // Tell the client that everything is fine
     w.WriteHeader(http.StatusOK)
     w.Header().Set("Content-Type", "text/plain")
     w.Write([]byte("I am working :)"))
@@ -36,8 +32,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   }
 
   if r.Method != http.MethodPost {
-    // Tell the client that his request method is not implemented
-    http.Error(w, http.StatusText(http.StatusNotImplemented), http.StatusNotImplemented)
+    httpFailure(w, http.StatusNotImplemented)
     return
   }
 
@@ -45,17 +40,26 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   var emailSendRequest EmailSendRequest
   decodeErr := decoder.Decode(&emailSendRequest)
   if decodeErr != nil {
-    // Tell the client that his request payload is not ok
-    http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+    httpFailure(w, http.StatusBadRequest)
+    return
+  }
+
+  if emailSendRequest.Recipients == nil || emailSendRequest.Body == nil {
+    httpFailure(w, http.StatusBadRequest)
     return
   }
 
   sendErr := sendEmail(emailSendRequest.Recipients, []byte(emailSendRequest.Body))
   if sendErr != nil {
-    http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+    httpFailure(w, http.StatusInternalServerError)
   } else {
   	w.WriteHeader(http.StatusOK)
   }
+}
+
+// Print error to Http socket
+func httpFailure(w http.ResponseWriter, httpStatusCode int) {
+  http.Error(w, http.StatusText(httpStatusCode), httpStatusCode)
 }
 
 // Main action : Sending email by SMTP
