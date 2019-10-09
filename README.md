@@ -1,6 +1,8 @@
 # Email Sender
 Rest API email sender
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/donatien513/Email-Sender)](https://goreportcard.com/report/github.com/donatien513/Email-Sender)
+
 ### Usage
 
 There is no route. Url path is ignored.
