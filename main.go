@@ -44,7 +44,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  if emailSendRequest.Recipients == nil || emailSendRequest.Body == nil {
+  if emailSendRequest.Recipients == "" || emailSendRequest.Body == "" {
     httpFailure(w, http.StatusBadRequest)
     return
   }
