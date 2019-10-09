@@ -27,7 +27,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
     http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
   }
 
-  if r.Method != http.MethodGet {
+  if r.Method == http.MethodGet {
     // Tell the client that everything is fine
     w.WriteHeader(http.StatusOK)
     w.Write([]byte("I am working :)"))
