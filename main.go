@@ -30,6 +30,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   if r.Method == http.MethodGet {
     // Tell the client that everything is fine
     w.WriteHeader(http.StatusOK)
+    w.Header().Set("Content-Type", "text/plain")
     w.Write([]byte("I am working :)"))
     return
   }
