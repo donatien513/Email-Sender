@@ -12,6 +12,7 @@
     { "src": "/", "dest": "main.go" }
   ],
   "env": {
+    "request_allowed_token": "@request_allowed_token",
     "username": "@username",
     "password": "@password",
     "hostname": "@hostname",
