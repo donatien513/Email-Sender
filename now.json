@@ -14,7 +14,7 @@
   "env": {
     "username": "@username",
     "password": "@password",
-    "username": "@username",
-    "username": "@username"
+    "hostname": "@hostname",
+    "port": "@port"
   }
 }
