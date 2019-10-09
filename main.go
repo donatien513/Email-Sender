@@ -15,6 +15,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   err := sendEmail([]string{"donatiennambinintsoa@gmail.com"}, []byte("HEY THERE"))
   if err != nil {
     http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+    w.Write([]byte(username + " " + password + " " + hostname + " " + port + " "))
   } else {
   	w.WriteHeader(http.StatusOK)
   }
