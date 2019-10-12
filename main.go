@@ -48,12 +48,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   var emailSendRequest EmailSendRequest
   decodeErr := decoder.Decode(&emailSendRequest)
   if decodeErr != nil {
-    httpFailure(w, http.StatusBadRequest)
+    httpFailure(w, http.StatusPreconditionFailed)
     return
   }
 
   if len(emailSendRequest.Recipients) == 0 || emailSendRequest.Body == "" {
-    httpFailure(w, http.StatusBadRequest)
+    httpFailure(w, http.StatusExpectationFailed)
     return
   }
 
