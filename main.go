@@ -31,6 +31,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
     httpFailure(w, http.StatusBadRequest)
     return
   }
+  defer r.Body.Close()
   if r.Method == http.MethodGet {
     w.WriteHeader(http.StatusOK)
     w.Header().Set("Content-Type", "text/plain")
