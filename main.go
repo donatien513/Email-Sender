@@ -1,10 +1,11 @@
 package Handler
 
 import (
-  "os"
+  //"os"
   "net/http"
   "net/smtp"
   "encoding/json"
+  "github.com/jordan-wright/email"
 )
 
 // Get all env vars
@@ -49,6 +50,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   decodeErr := decoder.Decode(&emailSendRequest)
   if decodeErr != nil {
     httpFailure(w, http.StatusPreconditionFailed)
+    panic(decodeErr)
     return
   }
 
@@ -73,19 +75,14 @@ func httpFailure(w http.ResponseWriter, httpStatusCode int) {
 
 // Main action : Sending email by SMTP
 func sendEmail(recipients []string, body []byte) error {
-  auth := smtp.PlainAuth(
-    "",
-    username,
-    password,
-    hostname,
-  )
-
-  err := smtp.SendMail(
-    hostname + ":" + port,
-    auth,
-    username,
-    recipients,
-    body,
-  )
-  return err
+  e := email.NewEmail()
+  e.From = username
+  e.To = recipients
+  e.Bcc = []string{}
+  e.Cc = []string{}
+  e.Subject = ""
+  e.Text = body
+  e.HTML = body
+  sendErr := e.Send(hostname + ":" + port, smtp.PlainAuth("", username, password, hostname))
+  return sendErr
 }
